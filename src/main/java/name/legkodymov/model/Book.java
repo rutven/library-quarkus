@@ -5,7 +5,6 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 public class Book extends PanacheEntity {
@@ -15,4 +14,14 @@ public class Book extends PanacheEntity {
     public String author;
     public Integer size;
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", issueDate=" + issueDate +
+                ", author='" + author + '\'' +
+                ", size=" + size +
+                ", id=" + id +
+                '}';
+    }
 }
