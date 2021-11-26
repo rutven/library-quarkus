@@ -1,6 +1,7 @@
 package name.legkodymov.resource;
 
 import io.quarkus.logging.Log;
+import name.legkodymov.model.Author;
 import name.legkodymov.model.Book;
 
 import javax.transaction.Transactional;
@@ -24,13 +25,14 @@ public class BookResource {
     @Path("/{id}")
     public Book get(@PathParam("id") Long id) {
         Book book = Book.findById(id);
-        Log.info("id - " + id + " book - " + book);
+        Log.info("findById - " + id + " book - " + book);
         return book;
     }
 
     @POST
     @Transactional
     public Response create(Book book) {
+        book.author = Author.findAuthor(book.author);
         book.persist();
         return Response.created(URI.create("/books/" + book.id)).build();
     }
