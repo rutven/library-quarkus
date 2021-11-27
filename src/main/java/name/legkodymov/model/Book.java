@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021. Sergey Legkodymov (rutven@gmail.com)
+ */
+
 package name.legkodymov.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;

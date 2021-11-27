@@ -1,6 +1,11 @@
+/*
+ * Copyright (c) 2021. Sergey Legkodymov (rutven@gmail.com)
+ */
+
 package name.legkodymov.resource;
 
 import io.quarkus.logging.Log;
+import io.quarkus.panache.common.Sort;
 import name.legkodymov.model.Author;
 import name.legkodymov.model.Book;
 
@@ -18,7 +23,7 @@ public class BookResource {
 
     @GET
     public List<Book> list() {
-        return Book.listAll();
+        return Book.listAll(Sort.by("title"));
     }
 
     @GET
@@ -75,7 +80,7 @@ public class BookResource {
     @GET
     @Path("/author/{author}")
     public List<Book> getBooksByAuthor(@PathParam("author") String author) {
-        return Book.find("author", author).list();
+        return Book.find("author", Sort.by("title"), author).list();
     }
 
 

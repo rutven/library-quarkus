@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021. Sergey Legkodymov (rutven@gmail.com)
+ */
+
 package name.legkodymov;
 
 import io.quarkus.logging.Log;
@@ -18,7 +22,7 @@ public class BookResourceTest {
     final String bookBasePath = "/books";
 
     @Test
-    public void testCreateBook() throws Exception {
+    public void testCreateBook() {
         Author asimov = new Author();
         asimov.name = "Isaac Asimov";
 

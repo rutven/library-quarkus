@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021. Sergey Legkodymov (rutven@gmail.com)
+ */
+
 package name.legkodymov;
 
 import io.quarkus.test.junit.NativeImageTest;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021. Sergey Legkodymov (rutven@gmail.com)
+ */
+
 package name.legkodymov;
 
 import javax.ws.rs.GET;
