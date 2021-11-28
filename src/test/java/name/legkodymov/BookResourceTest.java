@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
 public class BookResourceTest {
@@ -32,23 +32,49 @@ public class BookResourceTest {
         book.size = 255;
         book.issueDate = LocalDate.of(1942, 5, 1);
 
-        given().basePath(bookBasePath).contentType(ContentType.JSON).body(book)
+        Book created = given().basePath(bookBasePath).contentType(ContentType.JSON).body(book)
                 .when().post()
-                .then().statusCode(201);
+                .then().statusCode(200).extract().as(Book.class);
 
-        Log.info("Book created - " + book);
+        Log.info("Book created - " + created.toString());
 
-        given().basePath(bookBasePath).contentType(ContentType.JSON)
-                .when().get()
-                .then().statusCode(200).body("size()", is(1));
-
-        Log.info("Book stored in DB");
-
-        Book newBook = given().basePath(bookBasePath)
-                .when().get("/2")
-                .then().statusCode(200)
-                .extract().as(Book.class);
-
-        Log.info("Book retrieved - " + newBook.toString());
+        assertBooks(book, created);
     }
+
+    private void assertBooks(Book book, Book created) {
+        assertEquals(book.size, created.size);
+        assertEquals(book.title, created.title);
+        assertEquals(book.issueDate, created.issueDate);
+        assertEquals(book.author.name, created.author.name);
+    }
+
+    @Test
+    public void testUpdateBook() {
+        Author heinlein = new Author();
+        heinlein.name = "Robert A. Heinlein";
+
+        Book book = new Book();
+        book.author = heinlein;
+        book.title = "Starship Troopers";
+        book.size = 263;
+        book.issueDate = LocalDate.of(1959, 11, 01);
+
+        Book created = given().basePath(bookBasePath).contentType(ContentType.JSON).body(book)
+                .when().post()
+                .then().statusCode(200).extract().as(Book.class);
+
+        Log.info("Book created - " + created.toString());
+
+        created.title = "Friday";
+        created.issueDate = LocalDate.of(1982, 04, 01);
+
+        Book updated = given().basePath(bookBasePath).contentType(ContentType.JSON).body(created)
+                .when().put("/" + created.id)
+                .then().statusCode(200).extract().as(Book.class);
+
+        Log.info("Book updated = " + updated.toString());
+
+        assertBooks(created, updated);
+    }
+
 }

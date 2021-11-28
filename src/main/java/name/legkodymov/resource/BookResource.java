@@ -36,10 +36,10 @@ public class BookResource {
 
     @POST
     @Transactional
-    public Response create(Book book) {
+    public Book create(Book book) {
         book.author = Author.findAuthor(book.author);
         book.persist();
-        return Response.created(URI.create("/books/" + book.id)).build();
+        return book;
     }
 
     @PUT
