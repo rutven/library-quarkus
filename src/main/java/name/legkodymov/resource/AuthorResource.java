@@ -9,9 +9,9 @@ import io.quarkus.logging.Log;
 import io.quarkus.panache.common.Sort;
 import name.legkodymov.model.Author;
 
-import javax.transaction.Transactional;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Optional;
 
